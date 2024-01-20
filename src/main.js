@@ -4,8 +4,9 @@ import { GameOver } from "./scenes/GameOver";
 import { MainMenu } from "./scenes/MainMenu";
 import { Preloader } from "./scenes/Preloader";
 
-function init_game(config, width) {
+function initGame(config) {
   let tmp = Object.assign({}, config);
+  const width = calcWidth();
   tmp.width = width;
   const game = new Phaser.Game(tmp);
   game.config.info = {
@@ -21,14 +22,28 @@ function init_game(config, width) {
   return game;
 }
 
-const ratio = window.innerWidth / innerHeight;
-const height = 580;
-const width = Math.min(1300, Math.round(580 * ratio));
+function calcWidth(h = 580) {
+  const ratio = window.innerWidth / innerHeight;
+  const width = Math.min(1300, Math.round(h * ratio));
+  return width;
+}
+
+function isMobile() {
+  if (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    )
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 const config = {
   type: Phaser.AUTO,
-  width: width,
-  height: height,
+  width: calcWidth(580),
+  height: 580,
   parent: "game-container",
   backgroundColor: "#028af8",
   scale: {
@@ -41,32 +56,40 @@ const config = {
 let game = null;
 
 if (window.innerWidth > innerHeight) {
-  game = init_game(config, width);
+  game = initGame(config);
 }
 
-let last_scene = null;
+let lastScene = null;
 
 window.addEventListener(
   "resize",
   function () {
     if (window.innerWidth > innerHeight) {
       if (game === null) {
-        const ratio = window.innerWidth / innerHeight;
-        const width = Math.min(1300, Math.round(580 * ratio));
-        game = init_game(config, width);
+        game = initGame(config);
       } else {
-        game.scene.resume(last_scene);
+        game.scene.resume(lastScene);
       }
     } else {
       if (game === null) return;
-      let scene = game.scene.getScenes(true);
+      const scene = game.scene.getScenes(true);
       if ("length" in scene && scene.length > 0 && "scene" in scene[0]) {
-        last_scene = scene[0].scene.key;
-        game.scene.pause(last_scene);
+        lastScene = scene[0].scene.key;
+        game.scene.pause(lastScene);
       }
     }
   },
   false,
 );
 
+window.$G = game;
+
 export default game;
+
+// to see
+/*
+$G.scale.resize(900,400)
+$G.scene.stop('MainMenu')
+$G.scene.start('MainMenu')
+*/
+// if can help to manage resizing

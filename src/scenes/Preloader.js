@@ -6,10 +6,8 @@ export class Preloader extends Scene {
   }
 
   init() {
-    this.center = {
-      x: this.game.config.info.res.w / 2,
-      y: this.game.config.info.res.h / 2,
-    };
+    const { width, height } = this.sys.game.canvas;
+    this.center = { x: width / 2, y: height / 2 };
     //  We loaded this image in our Boot Scene, so we can display it here
     this.add.image(this.center.x, this.center.y, "background");
 

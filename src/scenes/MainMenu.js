@@ -5,14 +5,10 @@ export class MainMenu extends Scene {
     super("MainMenu");
   }
 
-  init() {
-    this.center = {
-      x: this.game.config.info.res.w / 2,
-      y: this.game.config.info.res.h / 2,
-    };
-  }
-
   create() {
+    const { width, height } = this.sys.game.canvas;
+    this.center = { x: width / 2, y: height / 2 };
+
     this.add.image(this.center.x, this.center.y, "background");
 
     this.add.image(this.center.x, 300, "logo");
