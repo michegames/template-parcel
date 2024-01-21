@@ -3,49 +3,22 @@ import { Game } from "./scenes/Game";
 import { GameOver } from "./scenes/GameOver";
 import { MainMenu } from "./scenes/MainMenu";
 import { Preloader } from "./scenes/Preloader";
+import {
+  initGameLandScape,
+  calcOther,
+  isMobile,
+  getSceneID,
+  __HEIHT__,
+} from "./utils/helpers";
 
-function initGame(config) {
-  let tmp = Object.assign({}, config);
-  const width = calcWidth();
-  tmp.width = width;
-  const game = new Phaser.Game(tmp);
-  game.config.info = {
-    area: {
-      w: 1031,
-      h: 580,
-    },
-    res: {
-      w: width,
-      h: 580,
-    },
-  };
-  return game;
-}
-
-function calcWidth(h = 580) {
-  const ratio = window.innerWidth / innerHeight;
-  const width = Math.min(1300, Math.round(h * ratio));
-  return width;
-}
-
-function isMobile() {
-  if (
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent,
-    )
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}
+console.log(calcOther(__HEIHT__), __HEIHT__);
 
 const config = {
   type: Phaser.AUTO,
-  width: calcWidth(580),
-  height: 580,
+  width: calcOther(__HEIHT__),
+  height: __HEIHT__,
   parent: "game-container",
-  backgroundColor: "#028af8",
+  backgroundColor: "#ffffff",
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -54,42 +27,41 @@ const config = {
 };
 
 let game = null;
+let lastSceneID = null;
 
+// start game only if is landscape
 if (window.innerWidth > innerHeight) {
-  game = initGame(config);
+  game = initGameLandScape(config);
 }
 
-let lastScene = null;
-
-window.addEventListener(
-  "resize",
-  function () {
-    if (window.innerWidth > innerHeight) {
-      if (game === null) {
-        game = initGame(config);
-      } else {
-        game.scene.resume(lastScene);
-      }
+function resizeLandScape() {
+  if (lastSceneID === null && game !== null) {
+    const scene = game.scene.getScenes(true);
+    const sceneID = getSceneID(scene);
+    if (sceneID !== null) lastSceneID = sceneID;
+  }
+  // landscape, init game if not previus start
+  if (window.innerWidth > innerHeight) {
+    if (game === null) {
+      game = initGameLandScape(config);
     } else {
-      if (game === null) return;
-      const scene = game.scene.getScenes(true);
-      if ("length" in scene && scene.length > 0 && "scene" in scene[0]) {
-        lastScene = scene[0].scene.key;
-        game.scene.pause(lastScene);
+      if (isMobile()) {
+        game.scene.resume(lastSceneID);
+      } else {
+        game.scene.stop(lastSceneID);
+        game.scale.resize(calcOther(__HEIHT__), __HEIHT__);
+        game.scene.start(lastSceneID);
       }
     }
-  },
-  false,
-);
+  } else {
+    if (game === null) return;
+    const scene = game.scene.getScenes(true);
+    const sceneID = getSceneID(scene);
+    if (sceneID !== null) lastSceneID = sceneID;
+    game.scene.pause(lastSceneID);
+  }
+}
 
-window.$G = game;
+window.addEventListener("resize", resizeLandScape, false);
 
 export default game;
-
-// to see
-/*
-$G.scale.resize(900,400)
-$G.scene.stop('MainMenu')
-$G.scene.start('MainMenu')
-*/
-// if can help to manage resizing
