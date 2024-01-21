@@ -45,7 +45,10 @@ ln -s index.landscape.html index.html
 ln -s index.portrait.html index.html
 ```
 
+## EJECT
 
+* for landscape: ./bin/create-landscape
+* for portrait ./bin/create-portrait
 
 ### Versions
 
