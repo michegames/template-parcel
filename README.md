@@ -37,18 +37,12 @@ link your profile.
 *Landscape*
 
 ```bash
-cd src
-ln -s main.landscape.js main.js
-cd css
-ln -s landscape.css style.css
+ln -s index.landscape.html index.html
 ```
 
 *Portrait*
 ```bash
-cd src
-ln -s main.portrait.js main.js
-cd css
-ln -s portrait.css style.css
+ln -s index.portrait.html index.html
 ```
 
 
