@@ -26,6 +26,7 @@ dist-ssr
 
 # profile
 src/main.js
+src/css/style.css
 
 # node env
 n_env
