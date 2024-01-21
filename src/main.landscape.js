@@ -11,8 +11,6 @@ import {
   __HEIHT__,
 } from "./utils/helpers";
 
-console.log(calcOther(__HEIHT__), __HEIHT__);
-
 const config = {
   type: Phaser.AUTO,
   width: calcOther(__HEIHT__),

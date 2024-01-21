@@ -38,8 +38,8 @@ function initGameportrait(config) {
   const game = new Phaser.Game(tmp);
   game.config.info = {
     area: {
-      w: DESIDERED.landscape.w,
-      h: DESIDERED.landscape.h,
+      w: DESIDERED.portrait.w,
+      h: DESIDERED.portrait.h,
     },
     res: {
       w: __WIDTH__,
