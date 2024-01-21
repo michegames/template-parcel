@@ -1,0 +1,27 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+cd ..
+
+cp index.raw.html index.html
+rm index.raw.html
+rm index.landscape.html
+rm index.portrait.html
+
+cat .gitignore  | grep -v 'index.html' | grep -v '# profile' > /tmp/12345678.profile
+cat /tmp/12345678.profile > .gitignore
+
+cd src
+cp main.portrait.js main.js
+
+cd css
+cp portrait.css style.css
+rm landscape.css
+rm portrait.css
+
+cd "$(dirname "$0")"
+cd ..
+
+cd public
+cd assets
+rm -rf landscape
