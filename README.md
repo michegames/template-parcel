@@ -32,11 +32,23 @@ https://github.com/micheg/node_env
 
 ### profiles
 
-link your profile, landscape or portrait, ex:
+link your profile.
+
+*Landscape*
 
 ```bash
 cd src
 ln -s main.landscape.js main.js
+cd css
+ln -s landscape.css style.css
+```
+
+*Portrait*
+```bash
+cd src
+ln -s main.portrait.js main.js
+cd css
+ln -s portrait.css style.css
 ```
 
 

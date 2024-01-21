@@ -4,7 +4,7 @@ import { GameOver } from "./scenes/GameOver";
 import { MainMenu } from "./scenes/MainMenu";
 import { Preloader } from "./scenes/Preloader";
 import {
-  initGameLandScape,
+  initGameportrait,
   calcOther,
   isMobile,
   getSceneID,
@@ -27,9 +27,9 @@ const config = {
 let game = null;
 let lastSceneID = null;
 
-// start game only if is landscape
-if (window.innerWidth > innerHeight) {
-  game = initGameLandScape(config);
+// start game only if is portrait
+if (window.innerHeight > window.innerWidth) {
+  game = initGameportrait(config);
 }
 
 function resizeLandScape() {
@@ -39,15 +39,15 @@ function resizeLandScape() {
     if (sceneID !== null) lastSceneID = sceneID;
   }
   // landscape, init game if not previus start
-  if (window.innerWidth > innerHeight) {
+  if (window.innerHeight > window.innerWidth) {
     if (game === null) {
-      game = initGameLandScape(config);
+      game = initGameportrait(config);
     } else {
       if (isMobile()) {
         game.scene.resume(lastSceneID);
       } else {
         game.scene.stop(lastSceneID);
-        game.scale.resize(calcOther(__HEIHT__), __HEIHT__);
+        game.scale.resize(__WIDTH__, calcOther(__WIDTH__));
         game.scene.start(lastSceneID);
       }
     }

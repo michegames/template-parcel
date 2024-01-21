@@ -27,6 +27,7 @@ function initGameLandScape(config) {
       w: width,
       h: __HEIHT__,
     },
+    mode: "landscape",
   };
   return game;
 }
@@ -45,15 +46,25 @@ function initGameportrait(config) {
       w: __WIDTH__,
       h: height,
     },
+    mode: "portrait",
   };
   return game;
 }
 
-function calcOther(h) {
-  const ratio = window.innerWidth / innerHeight;
-  const _width = Math.min(__MAX__, Math.round(h * ratio));
-  const width = Math.max(_width, (h * 16) / 9.0);
-  return width;
+function calcOther(__size__) {
+  if (window.innerWidth > window.innerHeight) {
+    const ratio = window.innerWidth / window.innerHeight;
+    const _width = Math.min(__MAX__, Math.round(__size__ * ratio));
+    const width = Math.max(_width, (__size__ * 16) / 9.0);
+    return width;
+  }
+  if (window.innerHeight > window.innerWidth) {
+    const ratio = window.innerHeight / window.innerWidth;
+    const _height = Math.min(__MAX__, Math.round(__size__ * ratio));
+    const height = Math.max(_height, (__size__ * 16) / 9.0);
+    return height;
+  }
+  return __size__;
 }
 
 function isMobile() {
