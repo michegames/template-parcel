@@ -24,6 +24,8 @@ const config = {
   scene: [Boot, Preloader, MainMenu, Game, GameOver],
 };
 
+window.focus();
+
 let game = null;
 let lastSceneID = null;
 
