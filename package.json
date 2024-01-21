@@ -5,7 +5,7 @@
   "source": "./index.html",
   "browserslist": "> 0.25%, last 2 versions, not dead",
   "scripts": {
-    "dev": "parcel index.html --no-cache --config ./parcel/.parcel-dev --open",
+    "dev": "parcel index.html --no-cache --config ./parcel/.parcel-dev -p 9090 --https",
     "build": "parcel build index.html --no-source-maps --log-level error --config ./parcel/.parcel-prod"
   },
   "repository": {
