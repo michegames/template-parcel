@@ -35,7 +35,8 @@ https://github.com/micheg/node_env
 link your profile, landscape or portrait, ex:
 
 ```bash
-ln -s src/main.landscape.js src/main.js
+cd src
+ln -s main.landscape.js main.js
 ```
 
 
